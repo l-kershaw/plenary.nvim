@@ -30,4 +30,26 @@ utils.apply_defaults = function(original, defaults)
   return original
 end
 
+utils.resolve_borderchars = function(borderchars)
+    local b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft
+    if borderchars == nil then
+      b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft =
+        "═", "║", "═", "║", "╔", "╗", "╝", "╚"
+    elseif #borderchars == 1 then
+      local b_char = borderchars[1]
+      b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft =
+        b_char, b_char, b_char, b_char, b_char, b_char, b_char, b_char
+    elseif #borderchars == 2 then
+      local b_char = borderchars[1]
+      local c_char = borderchars[2]
+      b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft =
+        b_char, b_char, b_char, b_char, c_char, c_char, c_char, c_char
+    elseif #borderchars == 8 then
+      b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft = unpack(borderchars)
+    else
+      error(string.format 'Not enough arguments for "borderchars"')
+    end
+    return b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft
+end
+
 return utils

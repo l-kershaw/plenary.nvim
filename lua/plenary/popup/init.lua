@@ -341,24 +341,7 @@ function popup.create(what, vim_options)
     --     'encoding' is "utf-8" and 'ambiwidth' is "single",
     --     otherwise ASCII characters are used.
 
-    local b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft
-    if vim_options.borderchars == nil then
-      b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft =
-        "═", "║", "═", "║", "╔", "╗", "╝", "╚"
-    elseif #vim_options.borderchars == 1 then
-      local b_char = vim_options.borderchars[1]
-      b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft =
-        b_char, b_char, b_char, b_char, b_char, b_char, b_char, b_char
-    elseif #vim_options.borderchars == 2 then
-      local b_char = vim_options.borderchars[1]
-      local c_char = vim_options.borderchars[2]
-      b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft =
-        b_char, b_char, b_char, b_char, c_char, c_char, c_char, c_char
-    elseif #vim_options.borderchars == 8 then
-      b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft = unpack(vim_options.borderchars)
-    else
-      error(string.format 'Not enough arguments for "borderchars"')
-    end
+    local b_top, b_right, b_bot, b_left, b_topleft, b_topright, b_botright, b_botleft = utils.resolve_borderchars(vim_options.borderchars)
 
     border_options.top = b_top
     border_options.bot = b_bot
